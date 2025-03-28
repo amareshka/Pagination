@@ -1,5 +1,19 @@
 #root {
   max-width: 1280px;
-  margin: 0 auto;
+  margin: 0 10px;
+}
+
+.products {
+  display: flex;
+  flex-flow: row wrap;
+}
+
+.product {
+  width: 190px;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #ddd;
+  margin: 3px;
   text-align: center;
+  padding: 5px;
 }
