@@ -5,25 +5,27 @@ import { useState } from "react";
 function App() {
   const [productsList, setProductsList] = useState([]);
   const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
 
   const fetchProducts = async () => {
-    const res = await fetch("https://dummyjson.com/products?limit=100");
+    const res = await fetch(`https://dummyjson.com/products?limit=10&skip=${page * 10 - 10}`);
     const data = await res.json();
 
     if (data && data.products) {
       setProductsList(data.products);
+      setTotalPages(Math.round(data.total / 10));
       console.log(data)
     }
   };
 
   useEffect(() => {
     fetchProducts();
-  }, []);
+  }, [page]);
 
   const selectPageHandler = (selectedPage) => {
     if (
       selectedPage >= 1 &&
-      selectedPage <= productsList.length / 10 &&
+      selectedPage <= totalPages &&
       selectedPage != page
     )
       setPage(selectedPage);
@@ -33,7 +35,7 @@ function App() {
     <>
       {productsList.length > 0 &&
         <div className="products">
-          {productsList.slice(page * 10 - 10, page * 10).map((prod) => {
+          {productsList.map((prod) => {
             return (
               <div className="product" key={prod.id}>
                 <img src={prod.thumbnail} alt={prod.title} />
@@ -45,7 +47,7 @@ function App() {
       }
       <div className="paginationContainer">
         <span className={page > 1 ? "" : "page_disabled"} onClick={() => selectPageHandler(page - 1)}>⬅️</span>
-        {[...Array(productsList.length / 10)].map((__, i) => {
+        {[...Array(totalPages)].map((__, i) => {
           return (
             <span
               key={i + 1}
@@ -57,7 +59,7 @@ function App() {
             </span>
           );
         })}
-        <span className={page < productsList.length / 10 ? "" : "page_disabled"}
+        <span className={page < totalPages ? "" : "page_disabled"}
           onClick={() => selectPageHandler(page + 1)}>➡️</span>
       </div >
     </>
