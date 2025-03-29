@@ -17,3 +17,25 @@
   text-align: center;
   padding: 5px;
 }
+
+.paginationContainer {
+  display: flex;
+  justify-content: center;
+  margin: 1rem 0;
+}
+
+.paginationContainer span {
+  padding: 5px 10px;
+  border: 1px solid #333;
+  text-align: center;
+  cursor: pointer;
+}
+
+.paginationContainer span.page_active {
+  background: #333;
+  color: #fff;
+}
+
+.paginationContainer span.page_disabled {
+  opacity: 0;
+}
