@@ -13,7 +13,7 @@ function App() {
 
     if (data && data.products) {
       setProductsList(data.products);
-      setTotalPages(Math.round(data.total / 10));
+      setTotalPages(Math.ceil(data.total / 10));
       console.log(data)
     }
   };
